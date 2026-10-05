@@ -1,0 +1,4 @@
+<?php
+require_once "../includes/config.php";require_once "../includes/auth.php";requireRole("admin");
+?>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>System Settings</title><link rel="stylesheet" href="../assets/css/style.css"></head><body><main class="container section"><div class="card"><h1>System Settings</h1><p><strong>Institution:</strong> Chebara Technical and Vocational College</p><p><strong>System:</strong> Online Counselling Booking Management System</p><p><strong>Technology:</strong> PHP, MySQL, HTML, CSS and JavaScript</p><p class="muted">Production database credentials should be configured on the hosting server and not committed to a public repository.</p><p><a href="dashboard.php">Back to dashboard</a></p></div></main></body></html>

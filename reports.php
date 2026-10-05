@@ -1,0 +1,13 @@
+<?php
+require_once "../includes/config.php";require_once "../includes/auth.php";requireRole("admin");
+function countQuery($conn,$sql){return (int)$conn->query($sql)->fetch_assoc()["total"];}
+$students=countQuery($conn,"SELECT COUNT(*) total FROM users WHERE role='student'");
+$counsellors=countQuery($conn,"SELECT COUNT(*) total FROM users WHERE role='counsellor'");
+$total=countQuery($conn,"SELECT COUNT(*) total FROM appointments");
+$completed=countQuery($conn,"SELECT COUNT(*) total FROM appointments WHERE status='completed'");
+$pending=countQuery($conn,"SELECT COUNT(*) total FROM appointments WHERE status='pending'");
+$confirmed=countQuery($conn,"SELECT COUNT(*) total FROM appointments WHERE status='confirmed'");
+$cancelled=countQuery($conn,"SELECT COUNT(*) total FROM appointments WHERE status='cancelled'");
+$monthly=$conn->query("SELECT DATE_FORMAT(sl.appointment_date,'%Y-%m') month,COUNT(a.id) total FROM appointments a JOIN appointment_slots sl ON a.slot_id=sl.id GROUP BY DATE_FORMAT(sl.appointment_date,'%Y-%m') ORDER BY month DESC LIMIT 12");
+?>
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reports</title><link rel="stylesheet" href="../assets/css/style.css"></head><body><main class="container section"><h1>Reports & Analytics</h1><section class="dashboard-grid"><div class="card"><h3>Students</h3><p class="stat-number"><?php echo $students; ?></p></div><div class="card"><h3>Counsellors</h3><p class="stat-number"><?php echo $counsellors; ?></p></div><div class="card"><h3>Total Appointments</h3><p class="stat-number"><?php echo $total; ?></p></div><div class="card"><h3>Completed</h3><p class="stat-number"><?php echo $completed; ?></p></div><div class="card"><h3>Pending</h3><p class="stat-number"><?php echo $pending; ?></p></div><div class="card"><h3>Confirmed</h3><p class="stat-number"><?php echo $confirmed; ?></p></div><div class="card"><h3>Cancelled</h3><p class="stat-number"><?php echo $cancelled; ?></p></div></section><div class="card"><h2>Monthly Appointments</h2><div class="table-responsive"><table><tr><th>Month</th><th>Total</th></tr><?php foreach($monthly as $r): ?><tr><td><?php echo htmlspecialchars(date("F Y",strtotime($r["month"]."-01"))); ?></td><td><?php echo (int)$r["total"]; ?></td></tr><?php endforeach; ?></table></div></div><p><a href="dashboard.php">Back</a></p></main></body></html>
