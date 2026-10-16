@@ -164,7 +164,7 @@ ul.list li:last-child{border:0}
 "use strict";
 /* ============ TRADING ENGINE (no DOM access; simulation only) ============ */
 const Engine = {
-  START_BALANCE: 10000,
+  START_BALANCE: 1000,
   DEFAULTS: { amount: 50, riskPct: 1, maxLoss: 100, maxTrades: 5, vol: "normal" },
   avg(a, n) { const s = a.slice(-n); return s.reduce((x, y) => x + y, 0) / s.length; },
   nextPrice(p, vol) {
