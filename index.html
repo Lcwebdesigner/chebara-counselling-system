@@ -88,7 +88,7 @@ ul.list li:last-child{border:0}
   </div>
   <div class="card">
     <label class="f" for="instrument">Instrument</label>
-    <select id="instrument"><option value="EUR/USD">EUR/USD (data)</option></select>
+    <select id="instrument"><option value="EUR/USD">EUR/USD (simulated)</option></select>
     <div class="row" style="margin-top:12px"><div><div class="lbl">Simulated price (not live)</div><div class="big" id="price">—</div></div>
     <div id="lastSignal"></div></div>
     <svg id="chart" class="chart" viewBox="0 0 300 80" preserveAspectRatio="none" role="img" aria-label="Simulated price chart"></svg>
@@ -229,7 +229,7 @@ const STRATS = [
   { id: "trend", name: "Trend Following", desc: "Compares a fast and a slow average of simulated prices." },
   { id: "meanrev", name: "Mean Reversion", desc: "Looks for simulated prices far from their recent average." },
   { id: "breakout", name: "Breakout Trading", desc: "Watches for moves beyond the recent simulated range." },
-  { id: "statarb", name: "Statistical Arbitrage", desc: "Simplified z-score demo on a single simulated series." }
+  { id: "statarb", name: "Z-score Reversion", desc: "Simplified z-score demo: trades against large moves from the recent average of one simulated series." }
 ];
 const today = () => new Date().toDateString();
 function freshState() {
@@ -426,7 +426,7 @@ document.querySelectorAll(".nav button").forEach(b => b.addEventListener("click"
 }));
 
 /* ============ START ============ */
-fillForm(); render();
+rollDay(); fillForm(); render();
 setInterval(tick, 2000);
 </script>
 </body>
